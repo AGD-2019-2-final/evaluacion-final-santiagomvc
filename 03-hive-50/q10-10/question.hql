@@ -23,4 +23,7 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
-
+INSERT OVERWRITE LOCAL DIRECTORY 'output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT llave, COUNT(llave) FROM t0
+LATERAL VIEW explode(c3) adTable AS llave, valor
+GROUP BY llave;
